@@ -7,7 +7,9 @@ import org.apache.commons.collections4.CollectionUtils;
 import java.util.Collection;
 
 /**
- * @author 文件上传路径
+ *
+ *
+ * @author sean.dneg
  */
 @Slf4j
 public class DelimiterWriterLocateBuilder {
@@ -20,7 +22,7 @@ public class DelimiterWriterLocateBuilder {
 
     public void doWrite(Collection<?> data) {
         if (delimiterWriter == null) {
-            throw new RuntimeException("必须使用 'EasySeparate.write().location()' 方式调用方法！");
+            throw new RuntimeException("Must use 'EasyDelimiter.write().locate()' to call this method");
         }
         if (CollectionUtils.isEmpty(data)) {
             log.info("The data list is empty, no further operation！");

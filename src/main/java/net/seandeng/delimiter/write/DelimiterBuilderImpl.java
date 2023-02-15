@@ -17,18 +17,6 @@ public class DelimiterBuilderImpl implements DelimiterBuilder {
 
     private DelimiterWriteExecutor delimiterWriteExecutor;
 
-//    public DelimiterBuilderImpl(WriteWorkbook writeWorkbook) {
-//        try {
-//            context = new WriteContextImpl(writeWorkbook);
-//        } catch (RuntimeException e) {
-//            finishOnException();
-//            throw e;
-//        } catch (Throwable e) {
-//            finishOnException();
-//            throw new RuntimeException(e);
-//        }
-//    }
-
     public DelimiterBuilderImpl() {
         try {
             context = new DelimiterWriteContextImpl();

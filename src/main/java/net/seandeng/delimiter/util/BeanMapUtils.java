@@ -22,16 +22,16 @@ public class BeanMapUtils {
         BeanMap.Generator gen = new BeanMap.Generator();
         gen.setBean(bean);
         gen.setContextClass(bean.getClass());
-        gen.setNamingPolicy(EasySeparateNamingPolicy.INSTANCE);
+        gen.setNamingPolicy(EasyDelimiterNamingPolicy.INSTANCE);
         return gen.create();
     }
 
-    public static class EasySeparateNamingPolicy extends DefaultNamingPolicy {
-        public static final EasySeparateNamingPolicy INSTANCE = new EasySeparateNamingPolicy();
+    public static class EasyDelimiterNamingPolicy extends DefaultNamingPolicy {
+        public static final EasyDelimiterNamingPolicy INSTANCE = new EasyDelimiterNamingPolicy();
 
         @Override
         protected String getTag() {
-            return "ByEasySeparateCGLIB";
+            return "ByEasyDelimiterCGLIB";
         }
     }
 }

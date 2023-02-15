@@ -11,7 +11,7 @@ import java.lang.reflect.Field;
 import java.util.*;
 
 /**
- * 分隔符格式字符执行
+ * The executor of delimiter write
  *
  * @author sean.deng
  */
@@ -64,9 +64,9 @@ public class DelimiterWriteExecutor {
     }
 
     /**
-     * 分割符具有顺序要求，反射根据类定义的字段排序
-     * @param clazz
-     * @param sortedAllFieldMap
+     * sort the bean field which it has field format
+     * @param clazz bean class
+     * @param sortedAllFieldMap  field map
      */
     private void sortedField(Class<?> clazz, Map<Integer, Field> sortedAllFieldMap) {
         if (!sortedAllFieldMap.isEmpty()) {

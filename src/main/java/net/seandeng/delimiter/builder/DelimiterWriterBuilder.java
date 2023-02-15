@@ -25,6 +25,7 @@ public class DelimiterWriterBuilder {
     }
 
     public DelimiterWriterLocateBuilder locate() {
-        return locate();
+        DelimiterWriter delimiterWriter = build();
+        return new DelimiterWriterLocateBuilder(delimiterWriter);
     }
 }

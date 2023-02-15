@@ -10,10 +10,8 @@ import net.seandeng.delimiter.builder.DelimiterWriterBuilder;
  */
 public class EasyDelimiterFactory {
 
-    public static DelimiterWriterBuilder write(String name) {
-        DelimiterWriterBuilder delimiterWriterBuilder = new DelimiterWriterBuilder();
-//        delimiterWriterBuilder.bin(name);
-        return delimiterWriterBuilder;
+    public static DelimiterWriterBuilder write() {
+        return new DelimiterWriterBuilder();
     }
 
 }

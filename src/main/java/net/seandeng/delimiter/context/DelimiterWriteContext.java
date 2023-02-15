@@ -1,7 +1,7 @@
 package net.seandeng.delimiter.context;
 
 /**
- * 分隔符写入上下文
+ * delimiter context
  *
  * @author sean.deng
  */
@@ -17,7 +17,7 @@ public interface DelimiterWriteContext {
     /**
      * close
      *
-     * @param onException
+     * @param onException exception
      */
     void finish(boolean onException);
 }

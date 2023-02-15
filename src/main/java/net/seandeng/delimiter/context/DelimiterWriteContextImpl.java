@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 分隔符写入上下文实现类
+ * Delimiter content write content implement
  *
  * @author sean.deng
  */
@@ -12,10 +12,6 @@ public class DelimiterWriteContextImpl implements DelimiterWriteContext {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DelimiterWriteContextImpl.class);
 
-    /**
-     * Current Work book
-     */
-//    private final WriteWorkbook writeWorkbook;
     /**
      * Current content holder
      */
@@ -25,28 +21,11 @@ public class DelimiterWriteContextImpl implements DelimiterWriteContext {
      */
     private boolean finished = false;
 
-//    public WriteContextImpl(WriteWorkbook writeWorkbook) {
-//        if (writeWorkbook == null) {
-//            throw new IllegalArgumentException("Workbook argument cannot be null");
-//        }
-//
-//        if (LOGGER.isDebugEnabled()) {
-//            LOGGER.debug("Begin to Initialization 'WriteContextImpl'");
-//        }
-//        this.writeWorkbook = writeWorkbook;
-//        // 初始化
-//        writeContentHolder = new StringBuilder();
-//
-//        if (LOGGER.isDebugEnabled()) {
-//            LOGGER.debug("Initialization 'WriteContextImpl' complete");
-//        }
-//    }
-
     public DelimiterWriteContextImpl() {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Begin to Initialization 'WriteContextImpl'");
         }
-        // 初始化
+        // initialize content holder
         writeContentHolder = new StringBuilder();
 
         if (LOGGER.isDebugEnabled()) {
