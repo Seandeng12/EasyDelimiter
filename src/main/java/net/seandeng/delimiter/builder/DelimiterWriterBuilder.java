@@ -1,6 +1,6 @@
 package net.seandeng.delimiter.builder;
 
-import net.seandeng.delimiter.DelimiteWriter;
+import net.seandeng.delimiter.DelimiterWriter;
 
 /**
  * 分隔符写实现类
@@ -20,8 +20,8 @@ public class DelimiterWriterBuilder {
 //        return this;
 //    }
 
-    public DelimiteWriter build() {
-        return new DelimiteWriter();
+    public DelimiterWriter build() {
+        return new DelimiterWriter();
     }
 
     public DelimiterWriterLocateBuilder locate() {

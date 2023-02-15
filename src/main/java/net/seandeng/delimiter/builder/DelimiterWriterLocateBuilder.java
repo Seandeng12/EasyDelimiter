@@ -1,7 +1,7 @@
 package net.seandeng.delimiter.builder;
 
 import lombok.extern.slf4j.Slf4j;
-import net.seandeng.delimiter.DelimiteWriter;
+import net.seandeng.delimiter.DelimiterWriter;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.Collection;
@@ -12,21 +12,21 @@ import java.util.Collection;
 @Slf4j
 public class DelimiterWriterLocateBuilder {
 
-    private final DelimiteWriter delimiteWriter;
+    private final DelimiterWriter delimiterWriter;
 
-    public DelimiterWriterLocateBuilder(DelimiteWriter delimiteWriter) {
-        this.delimiteWriter = delimiteWriter;
+    public DelimiterWriterLocateBuilder(DelimiterWriter delimiterWriter) {
+        this.delimiterWriter = delimiterWriter;
     }
 
     public void doWrite(Collection<?> data) {
-        if (delimiteWriter == null) {
+        if (delimiterWriter == null) {
             throw new RuntimeException("必须使用 'EasySeparate.write().location()' 方式调用方法！");
         }
         if (CollectionUtils.isEmpty(data)) {
             log.info("The data list is empty, no further operation！");
             return;
         }
-        delimiteWriter.write(data);
-        delimiteWriter.finish();
+        delimiterWriter.write(data);
+        delimiterWriter.finish();
     }
 }

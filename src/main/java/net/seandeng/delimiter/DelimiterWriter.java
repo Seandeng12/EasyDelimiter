@@ -11,19 +11,15 @@ import java.util.Collection;
  *
  * @author deng
  */
-public class DelimiteWriter implements Closeable {
+public class DelimiterWriter implements Closeable {
 
     private final DelimiterBuilder delimiterBuilder;
 
-    public DelimiteWriter() {
+    public DelimiterWriter() {
         delimiterBuilder = new DelimiterBuilderImpl();
     }
 
-//    public DelimiteWriter(WriteWorkbook writeWorkbook) {
-//        delimiterBuilder = new DelimiterBuilderImpl(writeWorkbook);
-//    }
-
-    public DelimiteWriter write(Collection<?> data) {
+    public DelimiterWriter write(Collection<?> data) {
         delimiterBuilder.addContent(data);
         return this;
     }
