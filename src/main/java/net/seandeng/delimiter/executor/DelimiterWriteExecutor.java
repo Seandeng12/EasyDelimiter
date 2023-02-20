@@ -53,6 +53,7 @@ public class DelimiterWriteExecutor {
         for (Map.Entry<Integer, Field> entry : sortedAllFieldMap.entrySet()) {
             fieldIndex ++;
 
+            // get value
             Field field = entry.getValue();
             String value = beanMap.get(field.getName()) == null ? "" : StrUtil.toString(beanMap.get(field.getName()));
             if (fieldIndex == sortedAllFieldMap.size()) {

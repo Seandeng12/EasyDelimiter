@@ -52,7 +52,6 @@ public class DelimiterWriteContextImpl implements DelimiterWriteContext {
                 throwable = t;
             }
         }
-
         finished = true;
 
         if (throwable != null) {
