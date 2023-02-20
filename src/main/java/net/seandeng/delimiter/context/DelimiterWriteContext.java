@@ -10,7 +10,7 @@ public interface DelimiterWriteContext {
     /**
      * All information about the sheet you are currently working on
      *
-     * @return
+     * @return StringBuilder
      */
     StringBuilder writeContentHolder();
 

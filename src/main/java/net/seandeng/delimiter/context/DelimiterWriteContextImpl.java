@@ -1,5 +1,6 @@
 package net.seandeng.delimiter.context;
 
+import com.alibaba.excel.exception.ExcelGenerateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,13 +41,25 @@ public class DelimiterWriteContextImpl implements DelimiterWriteContext {
 
     @Override
     public void finish(boolean onException) {
-        if (onException) {
-            LOGGER.info("数据拼接异常。");
-            return;
-        }
         if (finished) {
             return;
         }
+        Throwable throwable = null;
+        if (onException) {
+            try {
+                System.out.println("some error happen");
+            } catch (Throwable t) {
+                throwable = t;
+            }
+        }
+
         finished = true;
+
+        if (throwable != null) {
+            throw new ExcelGenerateException("Can not close IO.", throwable);
+        }
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Finished write.");
+        }
     }
 }

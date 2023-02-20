@@ -66,7 +66,7 @@ public class ClassUtils {
     }
 
     private static void declaredOneField(Field field, Map<Integer, List<Field>> orderFieldMap) {
-
+        // static，final，transient field will not add to field list
         boolean isStaticFinalOrTransient =
                 (Modifier.isStatic(field.getModifiers()) && Modifier.isFinal(field.getModifiers()))
                         || Modifier.isTransient(field.getModifiers());
