@@ -2,6 +2,7 @@ package net.seandeng.delimiter;
 
 import net.seandeng.delimiter.write.DelimiterBuilder;
 import net.seandeng.delimiter.write.DelimiterBuilderImpl;
+import net.seandeng.delimiter.write.metadata.WriteWorkbook;
 
 import java.io.Closeable;
 import java.util.Collection;
@@ -15,8 +16,8 @@ public class DelimiterWriter implements Closeable {
 
     private final DelimiterBuilder delimiterBuilder;
 
-    public DelimiterWriter() {
-        delimiterBuilder = new DelimiterBuilderImpl();
+    public DelimiterWriter(WriteWorkbook writeWorkbook) {
+        delimiterBuilder = new DelimiterBuilderImpl(writeWorkbook);
     }
 
     public DelimiterWriter write(Collection<?> data) {

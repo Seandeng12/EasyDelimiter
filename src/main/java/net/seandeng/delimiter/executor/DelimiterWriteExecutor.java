@@ -2,6 +2,7 @@ package net.seandeng.delimiter.executor;
 
 import cn.hutool.core.util.StrUtil;
 import net.seandeng.delimiter.context.DelimiterWriteContext;
+import net.seandeng.delimiter.handler.WriteHandler;
 import net.seandeng.delimiter.util.BeanMapUtils;
 import net.seandeng.delimiter.util.ClassUtils;
 import org.apache.commons.collections4.CollectionUtils;
@@ -52,10 +53,12 @@ public class DelimiterWriteExecutor {
         int fieldIndex = 0;
         for (Map.Entry<Integer, Field> entry : sortedAllFieldMap.entrySet()) {
             fieldIndex ++;
-
             // get value
             Field field = entry.getValue();
             String value = beanMap.get(field.getName()) == null ? "" : StrUtil.toString(beanMap.get(field.getName()));
+            // custom write handle
+            final WriteHandler writeHandler = delimiterWriteContext.writeWorkbook().getWriteHandler();
+            writeHandler.handle(value);
             if (fieldIndex == sortedAllFieldMap.size()) {
                 content.append(value);
             } else {

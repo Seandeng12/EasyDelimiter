@@ -1,5 +1,6 @@
 package net.seandeng.delimiter.builder;
 
+import cn.hutool.core.text.StrBuilder;
 import lombok.extern.slf4j.Slf4j;
 import net.seandeng.delimiter.DelimiterWriter;
 import org.apache.commons.collections4.CollectionUtils;
@@ -7,7 +8,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import java.util.Collection;
 
 /**
- *
+ * Delimiter Writer Locate Builder
  *
  * @author sean.dneg
  */

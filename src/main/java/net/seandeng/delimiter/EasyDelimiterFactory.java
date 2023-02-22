@@ -13,5 +13,4 @@ public class EasyDelimiterFactory {
     public static DelimiterWriterBuilder write() {
         return new DelimiterWriterBuilder();
     }
-
 }

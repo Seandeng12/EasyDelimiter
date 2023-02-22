@@ -1,5 +1,8 @@
 package net.seandeng.delimiter.context;
 
+import net.seandeng.delimiter.handler.WriteHandler;
+import net.seandeng.delimiter.write.metadata.WriteWorkbook;
+
 /**
  * delimiter context
  *
@@ -13,6 +16,12 @@ public interface DelimiterWriteContext {
      * @return StringBuilder
      */
     StringBuilder writeContentHolder();
+
+    /**
+     * WriteWorkbook
+     * @return WriteHandler
+     */
+    WriteWorkbook writeWorkbook();
 
     /**
      * close

@@ -1,6 +1,7 @@
 package net.seandeng.delimiter.context;
 
-import com.alibaba.excel.exception.ExcelGenerateException;
+import net.seandeng.delimiter.handler.TransmitHandler;
+import net.seandeng.delimiter.write.metadata.WriteWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +15,11 @@ public class DelimiterWriteContextImpl implements DelimiterWriteContext {
     private static final Logger LOGGER = LoggerFactory.getLogger(DelimiterWriteContextImpl.class);
 
     /**
+     * write parameter
+     */
+    private final WriteWorkbook writeWorkbook;
+
+    /**
      * Current content holder
      */
     private final StringBuilder writeContentHolder;
@@ -22,10 +28,11 @@ public class DelimiterWriteContextImpl implements DelimiterWriteContext {
      */
     private boolean finished = false;
 
-    public DelimiterWriteContextImpl() {
+    public DelimiterWriteContextImpl(WriteWorkbook writeWorkbook) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Begin to Initialization 'WriteContextImpl'");
         }
+        this.writeWorkbook = writeWorkbook;
         // initialize content holder
         writeContentHolder = new StringBuilder();
 
@@ -40,23 +47,18 @@ public class DelimiterWriteContextImpl implements DelimiterWriteContext {
     }
 
     @Override
+    public WriteWorkbook writeWorkbook() {
+        return writeWorkbook;
+    }
+
+    @Override
     public void finish(boolean onException) {
         if (finished) {
             return;
         }
-        Throwable throwable = null;
-        if (onException) {
-            try {
-                System.out.println("some error happen");
-            } catch (Throwable t) {
-                throwable = t;
-            }
-        }
+        final TransmitHandler transmitHandler = writeWorkbook.getTransmitHandler();
+        transmitHandler.invoke(writeContentHolder);
         finished = true;
-
-        if (throwable != null) {
-            throw new ExcelGenerateException("Can not close IO.", throwable);
-        }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Finished write.");
         }

@@ -3,11 +3,12 @@ package net.seandeng.delimiter.write;
 import net.seandeng.delimiter.context.DelimiterWriteContext;
 import net.seandeng.delimiter.context.DelimiterWriteContextImpl;
 import net.seandeng.delimiter.executor.DelimiterWriteExecutor;
+import net.seandeng.delimiter.write.metadata.WriteWorkbook;
 
 import java.util.Collection;
 
 /**
- * 分隔符写实现类
+ * implement builder
  *
  * @author admin
  */
@@ -17,9 +18,9 @@ public class DelimiterBuilderImpl implements DelimiterBuilder {
 
     private DelimiterWriteExecutor delimiterWriteExecutor;
 
-    public DelimiterBuilderImpl() {
+    public DelimiterBuilderImpl(WriteWorkbook writeWorkbook) {
         try {
-            context = new DelimiterWriteContextImpl();
+            context = new DelimiterWriteContextImpl(writeWorkbook);
         } catch (RuntimeException e) {
             finishOnException();
             throw e;
