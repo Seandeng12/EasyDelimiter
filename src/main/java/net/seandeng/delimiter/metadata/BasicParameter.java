@@ -4,7 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import net.seandeng.delimiter.handler.TransmitHandler;
-import net.seandeng.delimiter.handler.WriteHandler;
+import net.seandeng.delimiter.handler.WriteValueHandler;
 
 /**
  * Write basic parameter
@@ -18,7 +18,7 @@ public class BasicParameter {
     /**
      * custom write Handler
      */
-    private WriteHandler writeHandler;
+    private WriteValueHandler writeValueHandler;
 
     /**
      * custom transmit handler

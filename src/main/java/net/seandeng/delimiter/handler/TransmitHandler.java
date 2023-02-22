@@ -12,7 +12,7 @@ import java.io.File;
  *
  * @author sean
  */
-public abstract class TransmitHandler {
+public class TransmitHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransmitHandler.class);
 
@@ -33,8 +33,6 @@ public abstract class TransmitHandler {
         final File file = this.before(result);
         this.transmit(file);
     }
-
-    protected abstract String print();
 
     /**
      * before transmit

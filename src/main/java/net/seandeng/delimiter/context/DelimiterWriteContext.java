@@ -1,6 +1,5 @@
 package net.seandeng.delimiter.context;
 
-import net.seandeng.delimiter.handler.WriteHandler;
 import net.seandeng.delimiter.write.metadata.WriteWorkbook;
 
 /**

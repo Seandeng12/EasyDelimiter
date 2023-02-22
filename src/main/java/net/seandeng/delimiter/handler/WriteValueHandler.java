@@ -8,9 +8,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author sean,deng
  */
-public abstract class WriteHandler {
+public abstract class WriteValueHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(WriteHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WriteValueHandler.class);
 
     /**
      * handle the value

@@ -1,7 +1,7 @@
 package net.seandeng.delimiter.builder;
 
 import net.seandeng.delimiter.handler.TransmitHandler;
-import net.seandeng.delimiter.handler.WriteHandler;
+import net.seandeng.delimiter.handler.WriteValueHandler;
 import net.seandeng.delimiter.metadata.AbstractParameterBuilder;
 import net.seandeng.delimiter.metadata.WriteBasicParameter;
 
@@ -15,30 +15,25 @@ public abstract class AbstractWriterParameterBuilder<T extends AbstractWriterPar
 
     /**
      * register write handler
-     * @param writeHandler
+     * @param writeValueHandler
      * @return T
      */
-    public T registerWriteHandler(WriteHandler writeHandler) {
-        if (parameter().getWriteHandler() == null) {
-            parameter().setWriteHandler(new WriteHandler() {
+    public T registerWriteHandler(WriteValueHandler writeValueHandler) {
+        if (parameter().getWriteValueHandler() == null) {
+            parameter().setWriteValueHandler(new WriteValueHandler() {
                 @Override
                 public void handle(Object value) {
                     super.handle(value);
                 }
             });
         }
-        parameter().setWriteHandler(writeHandler);
+        parameter().setWriteValueHandler(writeValueHandler);
         return self();
     }
 
     public T registerTransmitListener(TransmitHandler transmitHandler) {
         if (parameter().getTransmitHandler() == null) {
-            parameter().setTransmitHandler(new TransmitHandler() {
-                @Override
-                public String print() {
-                    return "";
-                }
-            });
+            parameter().setTransmitHandler(new TransmitHandler());
         }
         parameter().setTransmitHandler(transmitHandler);
         return self();
