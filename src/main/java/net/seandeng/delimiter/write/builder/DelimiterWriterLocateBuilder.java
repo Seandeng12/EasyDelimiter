@@ -1,4 +1,4 @@
-package net.seandeng.delimiter.builder;
+package net.seandeng.delimiter.write.builder;
 
 import cn.hutool.core.text.StrBuilder;
 import lombok.extern.slf4j.Slf4j;

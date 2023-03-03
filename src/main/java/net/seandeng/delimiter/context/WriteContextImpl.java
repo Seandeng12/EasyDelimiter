@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author sean.deng
  */
-public class DelimiterWriteContextImpl implements DelimiterWriteContext {
+public class WriteContextImpl implements WriteContext {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DelimiterWriteContextImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WriteContextImpl.class);
 
     /**
      * write parameter
@@ -28,7 +28,7 @@ public class DelimiterWriteContextImpl implements DelimiterWriteContext {
      */
     private boolean finished = false;
 
-    public DelimiterWriteContextImpl(WriteWorkbook writeWorkbook) {
+    public WriteContextImpl(WriteWorkbook writeWorkbook) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Begin to Initialization 'WriteContextImpl'");
         }

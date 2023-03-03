@@ -1,7 +1,7 @@
 package net.seandeng.delimiter.executor;
 
 import cn.hutool.core.util.StrUtil;
-import net.seandeng.delimiter.context.DelimiterWriteContext;
+import net.seandeng.delimiter.context.WriteContext;
 import net.seandeng.delimiter.handler.WriteValueHandler;
 import net.seandeng.delimiter.util.BeanMapUtils;
 import net.seandeng.delimiter.util.ClassUtils;
@@ -18,10 +18,10 @@ import java.util.*;
  */
 public class DelimiterWriteExecutor {
 
-    private final DelimiterWriteContext delimiterWriteContext;
+    private final WriteContext writeContext;
 
-    public DelimiterWriteExecutor(DelimiterWriteContext delimiterWriteContext) {
-        this.delimiterWriteContext = delimiterWriteContext;
+    public DelimiterWriteExecutor(WriteContext writeContext) {
+        this.writeContext = writeContext;
     }
 
     public void add(Collection<?> data) {
@@ -40,7 +40,7 @@ public class DelimiterWriteExecutor {
             return;
         }
         // 初始化填写
-        StringBuilder content = delimiterWriteContext.writeContentHolder();
+        StringBuilder content = writeContext.writeContentHolder();
         // 直接写入
         addJavaObjectToContent(oneRowData, content, sortedAllFieldMap);
         // 结尾换行符
@@ -57,7 +57,7 @@ public class DelimiterWriteExecutor {
             Field field = entry.getValue();
             String value = beanMap.get(field.getName()) == null ? "" : StrUtil.toString(beanMap.get(field.getName()));
             // custom write handle
-            final WriteValueHandler writeValueHandler = delimiterWriteContext.writeWorkbook().getWriteValueHandler();
+            final WriteValueHandler writeValueHandler = writeContext.writeWorkbook().getWriteValueHandler();
             writeValueHandler.handle(value);
             if (fieldIndex == sortedAllFieldMap.size()) {
                 content.append(value);

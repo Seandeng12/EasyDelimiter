@@ -7,7 +7,7 @@ import net.seandeng.delimiter.write.metadata.WriteWorkbook;
  *
  * @author sean.deng
  */
-public interface DelimiterWriteContext {
+public interface WriteContext {
 
     /**
      * All information about the sheet you are currently working on
