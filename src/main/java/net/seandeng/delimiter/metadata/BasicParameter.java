@@ -16,6 +16,11 @@ import net.seandeng.delimiter.handler.WriteValueHandler;
 public class BasicParameter {
 
     /**
+     * You can only choose one of the head and clazz
+     */
+    private Class<?> clazz;
+
+    /**
      * custom write Handler
      */
     private WriteValueHandler writeValueHandler;

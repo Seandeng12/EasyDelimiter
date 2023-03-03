@@ -1,9 +1,8 @@
-package net.seandeng.delimiter.builder;
+package net.seandeng.delimiter.write.metadata;
 
 import net.seandeng.delimiter.handler.TransmitHandler;
 import net.seandeng.delimiter.handler.WriteValueHandler;
 import net.seandeng.delimiter.metadata.AbstractParameterBuilder;
-import net.seandeng.delimiter.metadata.WriteBasicParameter;
 
 /**
  * abstract writer parameter
