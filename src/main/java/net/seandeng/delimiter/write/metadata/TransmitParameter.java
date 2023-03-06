@@ -1,4 +1,4 @@
-package net.seandeng.delimiter.metadata;
+package net.seandeng.delimiter.write.metadata;
 
 import lombok.Data;
 

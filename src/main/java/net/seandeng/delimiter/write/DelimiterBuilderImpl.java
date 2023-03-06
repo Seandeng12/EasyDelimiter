@@ -2,7 +2,7 @@ package net.seandeng.delimiter.write;
 
 import net.seandeng.delimiter.context.WriteContext;
 import net.seandeng.delimiter.context.WriteContextImpl;
-import net.seandeng.delimiter.executor.DelimiterWriteExecutor;
+import net.seandeng.delimiter.write.executor.DelimiterWriteExecutor;
 import net.seandeng.delimiter.write.metadata.WriteWorkbook;
 
 import java.util.Collection;

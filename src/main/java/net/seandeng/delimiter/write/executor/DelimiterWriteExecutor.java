@@ -1,4 +1,4 @@
-package net.seandeng.delimiter.executor;
+package net.seandeng.delimiter.write.executor;
 
 import cn.hutool.core.util.StrUtil;
 import net.seandeng.delimiter.context.WriteContext;
