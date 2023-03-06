@@ -11,7 +11,7 @@ import java.io.InputStream;
  *
  * @author deng
  */
-public class DelimiterReaderBuilder extends AbstractExcelReaderParameterBuilder<DelimiterReaderBuilder, ReadWorkbook> {
+public class DelimiterReaderBuilder extends AbstractDelimiterReaderParameterBuilder<DelimiterReaderBuilder, ReadWorkbook> {
 
     private final ReadWorkbook readWorkbook;
 

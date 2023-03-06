@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author deng
  */
-public abstract class AbstractExcelReaderParameterBuilder<T extends AbstractExcelReaderParameterBuilder,
+public abstract class AbstractDelimiterReaderParameterBuilder<T extends AbstractDelimiterReaderParameterBuilder,
         C extends ReadBasicParameter> extends AbstractParameterBuilder<T, C> {
 
     public T registerReadListener(ReadListener<?> readListener) {

@@ -7,7 +7,7 @@ import net.seandeng.delimiter.read.metadata.holder.ReadRowHolder;
 
 /**
  *
- * A context is the main anchorage point of a excel reader.
+ * A context is the main anchorage point of a delimiter reader.
  *
  * @author deng
  */

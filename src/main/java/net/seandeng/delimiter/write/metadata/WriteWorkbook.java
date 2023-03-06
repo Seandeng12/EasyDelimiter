@@ -52,25 +52,4 @@ public class WriteWorkbook extends WriteBasicParameter {
      * Default true.
      */
     private Boolean autoCloseStream;
-    /**
-     * Mandatory use 'inputStream' .Default is false
-     */
-    private Boolean mandatoryUseInputStream;
-    /**
-     * Whether the encryption
-     * <p>
-     * WARRING:Encryption is when the entire file is read into memory, so it is very memory intensive.
-     *
-     */
-    private String password;
-    /**
-     * Write excel in memory. Default false, the cache file is created and finally written to excel.
-     * <p>
-     * Comment and RichTextString are only supported in memory mode.
-     */
-    private Boolean inMemory;
-    /**
-     * Excel is also written in the event of an exception being thrown.The default false.
-     */
-    private Boolean writeOnException;
 }
