@@ -19,7 +19,7 @@ public class DefaultAnalysisEventProcessor implements AnalysisEventProcessor {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultAnalysisEventProcessor.class);
 
     @Override
-    public void endRow(AnalysisContext analysisContext) {
+    public void endLine(AnalysisContext analysisContext) {
         dealData(analysisContext);
     }
 
@@ -49,6 +49,13 @@ public class DefaultAnalysisEventProcessor implements AnalysisEventProcessor {
             } catch (Exception e1) {
                 throw new DelimiterAnalysisException(e1.getMessage(), e1);
             }
+        }
+    }
+
+    @Override
+    public void endFile(AnalysisContext analysisContext) {
+        for (ReadListener readListener : analysisContext.currentReadHolder().readListenerList()) {
+            readListener.doAfterAllAnalysed(analysisContext);
         }
     }
 }

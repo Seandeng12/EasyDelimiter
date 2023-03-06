@@ -10,9 +10,15 @@ import net.seandeng.delimiter.context.AnalysisContext;
 public interface AnalysisEventProcessor {
 
     /**
-     * End row
+     * End line
      *
      * @param analysisContext
      */
-    void endRow(AnalysisContext analysisContext);
+    void endLine(AnalysisContext analysisContext);
+
+    /**
+     * end one file
+     * @param analysisContext
+     */
+    void endFile(AnalysisContext analysisContext);
 }

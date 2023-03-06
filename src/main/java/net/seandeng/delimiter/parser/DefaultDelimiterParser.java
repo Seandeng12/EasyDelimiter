@@ -43,7 +43,7 @@ public class DefaultDelimiterParser {
         for (String line : lines) {
             analysisContext.readRowHolder(new ReadRowHolder(sortedAllFieldMap));
             analysisContext.readRowHolder().setCurrentRowAnalysisResult(line);
-            analysisContext.analysisEventProcessor().endRow(analysisContext);
+            analysisContext.analysisEventProcessor().endLine(analysisContext);
         }
     }
 

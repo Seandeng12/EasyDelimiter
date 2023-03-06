@@ -28,13 +28,14 @@ public class ModelBuildEventListener implements IgnoreExceptionReadListener<Obje
     }
 
     private Object buildDefineClassModel(Object data, AnalysisContext context) {
+        final Class<?> clazz = context.readWorkbookHolder().getReadWorkbook().getClazz();
         Object oneData = null;
         try {
             String line = StrUtil.str(data, "UTF-8");
             final String[] split = line.split("\\|");
             final List<String> values = ListUtil.of(split);
             // new instance Class
-            oneData = Class.forName(context.readWorkbook().getClazz().getName()).newInstance();
+            oneData = Class.forName(clazz.getName()).newInstance();
             int fieldIndex = 0;
             for (Map.Entry<Integer, Field> entry : context.readRowHolder().getSortedAllFieldMap().entrySet()) {
                 final String value = values.get(fieldIndex);

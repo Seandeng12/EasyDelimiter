@@ -1,9 +1,9 @@
 package net.seandeng.delimiter.context;
 
 import net.seandeng.delimiter.processor.AnalysisEventProcessor;
-import net.seandeng.delimiter.read.metadata.ReadWorkbook;
 import net.seandeng.delimiter.read.metadata.holder.ReadHolder;
 import net.seandeng.delimiter.read.metadata.holder.ReadRowHolder;
+import net.seandeng.delimiter.read.metadata.holder.ReadWorkbookHolder;
 
 /**
  *
@@ -14,10 +14,11 @@ import net.seandeng.delimiter.read.metadata.holder.ReadRowHolder;
 public interface AnalysisContext {
 
     /**
-     * read parameter
-     * @return ReadWorkbook
+     * All information about the workbook you are currently working on
+     *
+     * @return Current workbook holder
      */
-    ReadWorkbook readWorkbook();
+    ReadWorkbookHolder readWorkbookHolder();
 
     /**
      * Set row of currently operated cell

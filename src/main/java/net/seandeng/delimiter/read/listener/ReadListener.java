@@ -33,7 +33,6 @@ public interface ReadListener<T> extends Listener {
      */
     void doAfterAllAnalysed(AnalysisContext context);
 
-
     /**
      * Verify that there is another piece of data.You can stop the read by returning false
      *

@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.seandeng.delimiter.processor.AnalysisEventProcessor;
 import net.seandeng.delimiter.processor.DefaultAnalysisEventProcessor;
 import net.seandeng.delimiter.read.metadata.ReadWorkbook;
-import net.seandeng.delimiter.read.metadata.holder.DefaultReadHolder;
+import net.seandeng.delimiter.read.metadata.holder.ReadWorkbookHolder;
 import net.seandeng.delimiter.read.metadata.holder.ReadHolder;
 import net.seandeng.delimiter.read.metadata.holder.ReadRowHolder;
 
@@ -16,7 +16,7 @@ import net.seandeng.delimiter.read.metadata.holder.ReadRowHolder;
 @Slf4j
 public class AnalysisContextImpl implements AnalysisContext {
 
-    private final ReadWorkbook readWorkbook;
+    private final ReadWorkbookHolder readWorkbookHolder;
 
     private final AnalysisEventProcessor analysisEventProcessor;
 
@@ -33,8 +33,8 @@ public class AnalysisContextImpl implements AnalysisContext {
         if (readWorkbook == null) {
             throw new IllegalArgumentException("Workbook argument cannot be null");
         }
-        this.readWorkbook = readWorkbook;
-        currentReadHolder = new DefaultReadHolder(readWorkbook);
+        readWorkbookHolder = new ReadWorkbookHolder(readWorkbook);
+        currentReadHolder = readWorkbookHolder;
         analysisEventProcessor = new DefaultAnalysisEventProcessor();
         if (log.isDebugEnabled()) {
             log.debug("Initialization 'AnalysisContextImpl' complete");
@@ -42,13 +42,13 @@ public class AnalysisContextImpl implements AnalysisContext {
     }
 
     @Override
-    public ReadWorkbook readWorkbook() {
-        return readWorkbook;
+    public ReadRowHolder readRowHolder() {
+        return readRowHolder;
     }
 
     @Override
-    public ReadRowHolder readRowHolder() {
-        return readRowHolder;
+    public ReadWorkbookHolder readWorkbookHolder() {
+        return readWorkbookHolder;
     }
 
     @Override

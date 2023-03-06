@@ -5,6 +5,7 @@ import net.seandeng.delimiter.context.AnalysisContextImpl;
 import net.seandeng.delimiter.exception.DelimiterAnalysisException;
 import net.seandeng.delimiter.exception.DelimiterAnalysisStopException;
 import net.seandeng.delimiter.read.metadata.ReadWorkbook;
+import net.seandeng.delimiter.read.metadata.holder.ReadWorkbookHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,8 +57,22 @@ public class DelimiterAnalyserImpl implements DelimiterAnalyser {
             return;
         }
         finished = true;
-        if (analysisContext == null || analysisContext.readWorkbook() == null) {
+        if (analysisContext == null || analysisContext.readWorkbookHolder() == null) {
             return;
+        }
+        ReadWorkbookHolder readWorkbookHolder = analysisContext.readWorkbookHolder();
+        Throwable throwable = null;
+
+        try {
+            if (analysisContext.readWorkbookHolder().getAutoCloseStream()
+                    && readWorkbookHolder.getInputStream() != null) {
+                readWorkbookHolder.getInputStream().close();
+            }
+        } catch (Throwable t) {
+            throwable = t;
+        }
+        if (throwable != null) {
+            throw new DelimiterAnalysisException("Can not close IO.", throwable);
         }
     }
 
