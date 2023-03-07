@@ -1,9 +1,11 @@
 package net.seandeng.delimiter.context;
 
-import net.seandeng.delimiter.processor.AnalysisEventProcessor;
+import net.seandeng.delimiter.read.metadata.ReadFile;
+import net.seandeng.delimiter.read.metadata.holder.ReadFileHolder;
 import net.seandeng.delimiter.read.metadata.holder.ReadHolder;
 import net.seandeng.delimiter.read.metadata.holder.ReadRowHolder;
 import net.seandeng.delimiter.read.metadata.holder.ReadWorkbookHolder;
+import net.seandeng.delimiter.read.processor.AnalysisEventProcessor;
 
 /**
  *
@@ -12,6 +14,10 @@ import net.seandeng.delimiter.read.metadata.holder.ReadWorkbookHolder;
  * @author deng
  */
 public interface AnalysisContext {
+
+    void currentFile(ReadFile readFile);
+
+    ReadFileHolder readFileHolder();
 
     /**
      * All information about the workbook you are currently working on

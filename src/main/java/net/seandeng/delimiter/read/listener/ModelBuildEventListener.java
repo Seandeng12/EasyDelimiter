@@ -1,15 +1,17 @@
 package net.seandeng.delimiter.read.listener;
 
-import cn.hutool.core.collection.ListUtil;
-import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import net.seandeng.delimiter.context.AnalysisContext;
-import net.seandeng.delimiter.exception.DelimiterAnalysisException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.seandeng.delimiter.exception.DelimiterDataConvertException;
+import net.seandeng.delimiter.metadata.Line;
+import net.seandeng.delimiter.metadata.data.ReadCellData;
+import net.seandeng.delimiter.read.metadata.holder.ReadFileHolder;
+import net.seandeng.delimiter.read.metadata.property.DelimiterReadLineProperty;
+import net.seandeng.delimiter.util.BeanMapUtils;
+import net.seandeng.delimiter.util.ClassUtils;
+import net.seandeng.delimiter.util.ConverterUtils;
+import org.springframework.cglib.beans.BeanMap;
 
-import java.lang.reflect.Field;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,47 +20,44 @@ import java.util.Map;
  * @author deng
  */
 @Slf4j
-public class ModelBuildEventListener implements IgnoreExceptionReadListener<Object> {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ModelBuildEventListener.class);
+public class ModelBuildEventListener implements IgnoreExceptionReadListener<Map<Integer, ReadCellData<?>>> {
 
     @Override
-    public void invoke(Object data, AnalysisContext context) {
-        context.readRowHolder().setCurrentRowAnalysisResult(buildDefineClassModel(data, context));
+    public void invoke(Map<Integer, ReadCellData<?>> cellDataMap, AnalysisContext context) {
+        context.readRowHolder().setCurrentRowAnalysisResult(buildDefineClassModel(cellDataMap, context.readFileHolder(), context));
     }
 
-    private Object buildDefineClassModel(Object data, AnalysisContext context) {
-        final Class<?> clazz = context.readWorkbookHolder().getReadWorkbook().getClazz();
-        Object oneData = null;
+    private Object buildDefineClassModel(Map<Integer, ReadCellData<?>> cellDataMap, ReadFileHolder readFileHolder, AnalysisContext context) {
+        DelimiterReadLineProperty delimiterReadLineProperty = readFileHolder.delimiterReadLineProperty();
+        Object resultModel;
         try {
-            String line = StrUtil.str(data, "UTF-8");
-            final String[] split = line.split("\\|");
-            final List<String> values = ListUtil.of(split);
-            // new instance Class
-            oneData = Class.forName(clazz.getName()).newInstance();
-            int fieldIndex = 0;
-            for (Map.Entry<Integer, Field> entry : context.readRowHolder().getSortedAllFieldMap().entrySet()) {
-                final String value = values.get(fieldIndex);
-                fieldIndex ++;
-
-                final Field field = entry.getValue();
-                field.setAccessible(true);
-
-                // 判断field
-                final Class<?> type = field.getType();
-                Object tempValue = value;
-                if (type == Integer.class) {
-                    tempValue = Integer.valueOf(value);
-                } else if (type == Long.class) {
-                    tempValue = Long.valueOf(value);
-                }
-                field.set(oneData, tempValue);
-            }
+            resultModel = delimiterReadLineProperty.getLineClazz().newInstance();
         } catch (Exception e) {
-            LOGGER.error("reflect Class error", e);
-            throw new DelimiterAnalysisException("reflect Class error", e);
+            throw new DelimiterDataConvertException("Can not instance class: " + delimiterReadLineProperty.getLineClazz().getName(), e);
         }
-        return oneData;
+        Map<Integer, Line> lineMap = delimiterReadLineProperty.getLineMap();
+        BeanMap dataMap = BeanMapUtils.create(resultModel);
+        for (Map.Entry<Integer, Line> entry : lineMap.entrySet()) {
+            Integer index = entry.getKey();
+            Line line = entry.getValue();
+            String fieldName = line.getFieldName();
+            if (!cellDataMap.containsKey(index)) {
+                continue;
+            }
+            ReadCellData<?> cellData = cellDataMap.get(index);
+            Object value = ConverterUtils.convertToJavaObject(
+                    cellData,
+                    line.getField(),
+                    ClassUtils.declaredDelimiterContentProperty(dataMap, readFileHolder.delimiterReadLineProperty().getLineClazz(), fieldName),
+                    readFileHolder.converterMap(),
+                    context,
+                    context.readRowHolder().getRowIndex(),
+                    index);
+            if (value != null) {
+                dataMap.put(fieldName, value);
+            }
+        }
+        return resultModel;
     }
 
     @Override

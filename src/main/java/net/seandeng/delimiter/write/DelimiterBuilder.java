@@ -3,14 +3,14 @@ package net.seandeng.delimiter.write;
 import java.util.Collection;
 
 /**
- * The Builder of data column
+ * The Builder of data line
  *
  * @author sean.deng
  */
 public interface DelimiterBuilder {
 
     /**
-     * data column to Content
+     * data List to Content
      *
      * @param data
      */

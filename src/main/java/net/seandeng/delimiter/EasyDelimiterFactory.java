@@ -21,11 +21,11 @@ public class EasyDelimiterFactory {
         return new DelimiterReaderBuilder();
     }
 
-    public static DelimiterReaderBuilder read(InputStream inputStream, Class<?> column, ReadListener<?> readListener) {
+    public static DelimiterReaderBuilder read(InputStream inputStream, Class<?> line, ReadListener<?> readListener) {
         DelimiterReaderBuilder delimiterReaderBuilder = new DelimiterReaderBuilder();
         delimiterReaderBuilder.file(inputStream);
-        if (column != null) {
-            delimiterReaderBuilder.column(column);
+        if (line != null) {
+            delimiterReaderBuilder.line(line);
         }
         if (readListener != null) {
             delimiterReaderBuilder.registerReadListener(readListener);

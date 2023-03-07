@@ -10,11 +10,11 @@ package net.seandeng.delimiter.metadata;
 public abstract class AbstractParameterBuilder<T extends AbstractParameterBuilder, C extends BasicParameter> {
 
     /**
-     * Column List
+     * Line List
      * @param clazz
      * @return
      */
-    public T column(Class<?> clazz) {
+    public T line(Class<?> clazz) {
         parameter().setClazz(clazz);
         return self();
     }

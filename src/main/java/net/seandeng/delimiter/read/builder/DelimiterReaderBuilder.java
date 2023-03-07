@@ -1,7 +1,6 @@
 package net.seandeng.delimiter.read.builder;
 
 import net.seandeng.delimiter.DelimiterReader;
-import net.seandeng.delimiter.read.DelimiterReaderLocateBuilder;
 import net.seandeng.delimiter.read.metadata.ReadWorkbook;
 
 import java.io.InputStream;
@@ -23,14 +22,24 @@ public class DelimiterReaderBuilder extends AbstractDelimiterReaderParameterBuil
         return new DelimiterReader(readWorkbook);
     }
 
-    public DelimiterReaderLocateBuilder locate() {
-        DelimiterReader delimiterReader = build();
-        return new DelimiterReaderLocateBuilder(delimiterReader);
-    }
-
     public DelimiterReaderBuilder file(InputStream inputStream) {
         readWorkbook.setInputStream(inputStream);
         return this;
+    }
+
+    public DelimiterReaderLocateBuilder locate() {
+        return locate(null, null);
+    }
+
+    public DelimiterReaderLocateBuilder locate(String fileName, String fileDir) {
+        DelimiterReaderLocateBuilder delimiterReaderLocateBuilder = new DelimiterReaderLocateBuilder(build());
+        if (fileName != null) {
+            delimiterReaderLocateBuilder.fileName(fileName);
+        }
+        if (fileDir != null) {
+            delimiterReaderLocateBuilder.fileDir(fileDir);
+        }
+        return delimiterReaderLocateBuilder;
     }
 
     @Override

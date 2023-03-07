@@ -1,12 +1,14 @@
 package net.seandeng.delimiter.context;
 
 import lombok.extern.slf4j.Slf4j;
-import net.seandeng.delimiter.processor.AnalysisEventProcessor;
-import net.seandeng.delimiter.processor.DefaultAnalysisEventProcessor;
+import net.seandeng.delimiter.read.metadata.ReadFile;
 import net.seandeng.delimiter.read.metadata.ReadWorkbook;
-import net.seandeng.delimiter.read.metadata.holder.ReadWorkbookHolder;
+import net.seandeng.delimiter.read.metadata.holder.ReadFileHolder;
 import net.seandeng.delimiter.read.metadata.holder.ReadHolder;
 import net.seandeng.delimiter.read.metadata.holder.ReadRowHolder;
+import net.seandeng.delimiter.read.metadata.holder.ReadWorkbookHolder;
+import net.seandeng.delimiter.read.processor.AnalysisEventProcessor;
+import net.seandeng.delimiter.read.processor.DefaultAnalysisEventProcessor;
 
 /**
  * Analysis Context
@@ -18,8 +20,10 @@ public class AnalysisContextImpl implements AnalysisContext {
 
     private final ReadWorkbookHolder readWorkbookHolder;
 
-    private final AnalysisEventProcessor analysisEventProcessor;
-
+    /**
+     * current file holder
+     */
+    private ReadFileHolder readFileHolder;
     /**
      * current row holder
      */
@@ -27,7 +31,9 @@ public class AnalysisContextImpl implements AnalysisContext {
     /**
      * currently operated value
      */
-    private final ReadHolder currentReadHolder;
+    private ReadHolder currentReadHolder;
+
+    private final AnalysisEventProcessor analysisEventProcessor;
 
     public AnalysisContextImpl(ReadWorkbook readWorkbook) {
         if (readWorkbook == null) {
@@ -39,6 +45,20 @@ public class AnalysisContextImpl implements AnalysisContext {
         if (log.isDebugEnabled()) {
             log.debug("Initialization 'AnalysisContextImpl' complete");
         }
+    }
+
+    @Override
+    public void currentFile(ReadFile readFile) {
+        readFileHolder = new ReadFileHolder(readFile, readWorkbookHolder);
+        currentReadHolder = readFileHolder;
+        if (log.isDebugEnabled()) {
+            log.debug("Began to read：{}", readFileHolder);
+        }
+    }
+
+    @Override
+    public ReadFileHolder readFileHolder() {
+        return readFileHolder;
     }
 
     @Override

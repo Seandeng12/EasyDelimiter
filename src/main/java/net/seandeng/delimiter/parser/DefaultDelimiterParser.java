@@ -1,7 +1,11 @@
 package net.seandeng.delimiter.parser;
 
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.io.IoUtil;
+import com.alibaba.excel.enums.CellDataTypeEnum;
 import net.seandeng.delimiter.context.AnalysisContext;
+import net.seandeng.delimiter.metadata.data.ReadCellData;
+import net.seandeng.delimiter.read.metadata.holder.ReadFileHolder;
 import net.seandeng.delimiter.read.metadata.holder.ReadRowHolder;
 import net.seandeng.delimiter.util.ClassUtils;
 import org.slf4j.Logger;
@@ -40,9 +44,20 @@ public class DefaultDelimiterParser {
         Map<Integer, Field> sortedAllFieldMap = new TreeMap<>();
         sortedField(clazz, sortedAllFieldMap);
         LOGGER.info("DefaultDelimiterParser get sorted Map" + sortedAllFieldMap);
-        for (String line : lines) {
-            analysisContext.readRowHolder(new ReadRowHolder(sortedAllFieldMap));
-            analysisContext.readRowHolder().setCurrentRowAnalysisResult(line);
+        for (int i = 0; i < lines.size(); i ++) {
+            int rowIndex = i;
+            String line = lines.get(rowIndex);
+            ReadFileHolder readFileHolder = analysisContext.readFileHolder();
+            String[] split = line.split("\\|");
+            List<String> values = ListUtil.of(split);
+            for (int j = 0; j < values.size(); j++) {
+                ReadCellData<?> tempCellData = new ReadCellData<>();
+                tempCellData.setStringValue(values.get(j));
+                tempCellData.setType(CellDataTypeEnum.STRING);
+                readFileHolder.getCellMap().put(j, tempCellData);
+            }
+            analysisContext.readRowHolder(new ReadRowHolder(rowIndex, readFileHolder.getCellMap()));
+            analysisContext.readRowHolder().setCurrentRowAnalysisResult(readFileHolder.getCellMap());
             analysisContext.analysisEventProcessor().endLine(analysisContext);
         }
     }

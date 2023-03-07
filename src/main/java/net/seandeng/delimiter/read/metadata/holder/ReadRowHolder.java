@@ -1,8 +1,9 @@
 package net.seandeng.delimiter.read.metadata.holder;
 
+import net.seandeng.delimiter.enums.HolderEnum;
+import net.seandeng.delimiter.metadata.Cell;
 import net.seandeng.delimiter.metadata.Holder;
 
-import java.lang.reflect.Field;
 import java.util.Map;
 
 /**
@@ -12,15 +13,41 @@ import java.util.Map;
  */
 public class ReadRowHolder implements Holder {
 
-    private Map<Integer, Field> sortedAllFieldMap;
+    private Integer rowIndex;
+    /**
+     * Cell map
+     */
+    private Map<Integer, Cell> cellMap;
 
     /**
-     * The result of the previous listener
+     * he result of the previous listener
      */
     private Object currentRowAnalysisResult;
 
-    public ReadRowHolder(Map<Integer, Field> sortedAllFieldMap) {
-        this.sortedAllFieldMap = sortedAllFieldMap;
+    public ReadRowHolder(Integer rowIndex, Map<Integer, Cell> cellMap) {
+        this.rowIndex = rowIndex;
+        this.cellMap = cellMap;
+    }
+
+    @Override
+    public HolderEnum holderType() {
+        return HolderEnum.ROW;
+    }
+
+    public Integer getRowIndex() {
+        return rowIndex;
+    }
+
+    public void setRowIndex(Integer rowIndex) {
+        this.rowIndex = rowIndex;
+    }
+
+    public Map<Integer, Cell> getCellMap() {
+        return cellMap;
+    }
+
+    public void setCellMap(Map<Integer, Cell> cellMap) {
+        this.cellMap = cellMap;
     }
 
     public Object getCurrentRowAnalysisResult() {
@@ -29,13 +56,5 @@ public class ReadRowHolder implements Holder {
 
     public void setCurrentRowAnalysisResult(Object currentRowAnalysisResult) {
         this.currentRowAnalysisResult = currentRowAnalysisResult;
-    }
-
-    public Map<Integer, Field> getSortedAllFieldMap() {
-        return sortedAllFieldMap;
-    }
-
-    public void setSortedAllFieldMap(Map<Integer, Field> sortedAllFieldMap) {
-        this.sortedAllFieldMap = sortedAllFieldMap;
     }
 }

@@ -4,10 +4,14 @@ import net.seandeng.delimiter.context.AnalysisContext;
 import net.seandeng.delimiter.context.AnalysisContextImpl;
 import net.seandeng.delimiter.exception.DelimiterAnalysisException;
 import net.seandeng.delimiter.exception.DelimiterAnalysisStopException;
+import net.seandeng.delimiter.read.metadata.ReadFile;
 import net.seandeng.delimiter.read.metadata.ReadWorkbook;
 import net.seandeng.delimiter.read.metadata.holder.ReadWorkbookHolder;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * analysis
@@ -41,7 +45,11 @@ public class DelimiterAnalyserImpl implements DelimiterAnalyser {
     }
 
     @Override
-    public void analysis() {
+    public void analysis(List<ReadFile> readFileList, Boolean readAll) {
+        if (!readAll && CollectionUtils.isEmpty(readFileList)) {
+            throw new IllegalArgumentException("Specify at least one read file.");
+        }
+        analysisContext.readWorkbookHolder().setParameterFileDataList(readFileList);
         try {
             delimiterReadExecutor.execute();
         } catch (DelimiterAnalysisStopException e) {
@@ -74,10 +82,5 @@ public class DelimiterAnalyserImpl implements DelimiterAnalyser {
         if (throwable != null) {
             throw new DelimiterAnalysisException("Can not close IO.", throwable);
         }
-    }
-
-    @Override
-    public AnalysisContext analysisContext() {
-        return analysisContext;
     }
 }

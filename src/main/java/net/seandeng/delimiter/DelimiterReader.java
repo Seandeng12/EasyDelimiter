@@ -2,9 +2,11 @@ package net.seandeng.delimiter;
 
 import net.seandeng.delimiter.analysis.DelimiterAnalyser;
 import net.seandeng.delimiter.analysis.DelimiterAnalyserImpl;
+import net.seandeng.delimiter.read.metadata.ReadFile;
 import net.seandeng.delimiter.read.metadata.ReadWorkbook;
 
 import java.io.Closeable;
+import java.util.Arrays;
 
 /**
  * Delimiter reader are all rad in event mode
@@ -14,7 +16,7 @@ import java.io.Closeable;
 public class DelimiterReader implements Closeable {
 
     /**
-     *  Analyser
+     * Analyser
      */
     private final DelimiterAnalyser delimiterAnalyser;
 
@@ -22,8 +24,8 @@ public class DelimiterReader implements Closeable {
         delimiterAnalyser = new DelimiterAnalyserImpl(readWorkbook);
     }
 
-    public DelimiterReader read() {
-        delimiterAnalyser.analysis();
+    public DelimiterReader read(ReadFile... readFile) {
+        delimiterAnalyser.analysis(Arrays.asList(readFile), Boolean.FALSE);
         return this;
     }
 

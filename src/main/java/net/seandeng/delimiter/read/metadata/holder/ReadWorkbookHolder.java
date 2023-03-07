@@ -4,10 +4,13 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.seandeng.delimiter.enums.HolderEnum;
+import net.seandeng.delimiter.read.metadata.ReadFile;
 import net.seandeng.delimiter.read.metadata.ReadWorkbook;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * @author deng
@@ -39,6 +42,12 @@ public class ReadWorkbookHolder extends AbstractReadHolder {
      * Default true
      */
     private Boolean autoCloseStream;
+    /**
+     * Parameter sheet data
+     */
+    private List<ReadFile> parameterFileDataList;
+
+    private Boolean readAll;
 
     public ReadWorkbookHolder(ReadWorkbook readWorkbook) {
         super(readWorkbook, null);
@@ -52,5 +61,10 @@ public class ReadWorkbookHolder extends AbstractReadHolder {
         } else {
             this.autoCloseStream = readWorkbook.getAutoCloseStream();
         }
+    }
+
+    @Override
+    public HolderEnum holderType() {
+        return HolderEnum.WORKBOOK;
     }
 }

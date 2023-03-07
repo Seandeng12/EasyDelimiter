@@ -1,4 +1,4 @@
-package net.seandeng.delimiter.processor;
+package net.seandeng.delimiter.read.processor;
 
 import net.seandeng.delimiter.context.AnalysisContext;
 import net.seandeng.delimiter.exception.DelimiterAnalysisException;
