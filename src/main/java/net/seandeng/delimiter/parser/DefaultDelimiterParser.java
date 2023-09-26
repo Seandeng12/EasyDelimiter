@@ -1,77 +1,78 @@
 package net.seandeng.delimiter.parser;
 
-import cn.hutool.core.collection.ListUtil;
-import cn.hutool.core.io.IoUtil;
 import com.alibaba.excel.enums.CellDataTypeEnum;
 import net.seandeng.delimiter.context.AnalysisContext;
 import net.seandeng.delimiter.metadata.data.ReadCellData;
 import net.seandeng.delimiter.read.metadata.holder.ReadFileHolder;
 import net.seandeng.delimiter.read.metadata.holder.ReadRowHolder;
-import net.seandeng.delimiter.util.ClassUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
-import java.io.InputStream;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 /**
  * file parse
  *
  * @author deng
  */
+@Slf4j
 public class DefaultDelimiterParser {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultDelimiterParser.class);
+    private final String file;
 
     private final AnalysisContext analysisContext;
 
-    private final InputStream inputStream;
-
     private final Class<?> clazz;
 
-    public DefaultDelimiterParser(AnalysisContext analysisContext, InputStream inputStream, Class<?> clazz) {
+    public DefaultDelimiterParser(AnalysisContext analysisContext, String file, Class<?> clazz) {
         this.analysisContext = analysisContext;
-        this.inputStream = inputStream;
+        this.file = file;
         this.clazz = clazz;
     }
 
+    /**
+     * 两种方法
+     * 1: 直接读取所有行内容 (容易出现内存溢出 -> 如何list太大)
+     * <p>
+     * 2:使用 Files 类静态方法进行文件操作注意释放文件句柄
+     */
     public void parser() {
-        List<String> lines = IoUtil.readLines(inputStream, "UTF-8", new ArrayList<>());
-        Map<Integer, Field> sortedAllFieldMap = new TreeMap<>();
-        sortedField(clazz, sortedAllFieldMap);
-        LOGGER.info("DefaultDelimiterParser get sorted Map" + sortedAllFieldMap);
-        for (int i = 0; i < lines.size(); i ++) {
-            int rowIndex = i;
-            String line = lines.get(rowIndex);
-            ReadFileHolder readFileHolder = analysisContext.readFileHolder();
-            String[] split = line.split("\\|");
-            List<String> values = ListUtil.of(split);
-            for (int j = 0; j < values.size(); j++) {
-                ReadCellData<?> tempCellData = new ReadCellData<>();
-                tempCellData.setStringValue(values.get(j));
-                tempCellData.setType(CellDataTypeEnum.STRING);
-                readFileHolder.getCellMap().put(j, tempCellData);
-            }
-            analysisContext.readRowHolder(new ReadRowHolder(rowIndex, readFileHolder.getCellMap()));
-            analysisContext.readRowHolder().setCurrentRowAnalysisResult(readFileHolder.getCellMap());
-            analysisContext.analysisEventProcessor().endLine(analysisContext);
+        AtomicInteger rowIndex = new AtomicInteger(0);
+        // 按需读取
+        try (Stream<String> streamLine = Files.lines(Paths.get(file), StandardCharsets.UTF_8)) {
+            streamLine.forEach(line -> {
+                doParser(line, rowIndex.get());
+                rowIndex.incrementAndGet();
+            });
+        } catch (IOException e) {
+            log.info("读取文件行异常：{}", e.getMessage(), e);
         }
     }
 
-    /**
-     * sort the bean field which it has field format
-     *
-     * @param clazz             bean class
-     * @param sortedAllFieldMap field map
-     */
-    private void sortedField(Class<?> clazz, Map<Integer, Field> sortedAllFieldMap) {
-        if (!sortedAllFieldMap.isEmpty()) {
-            return;
+    private void doParser(String line, Integer rowIndex) {
+        ReadFileHolder readFileHolder = analysisContext.readFileHolder();
+        String[] cells = line.split("\\|");
+        int loopLength = cells.length;
+        ReadCellData cellData = new ReadCellData();
+        for (int j = 0; j < loopLength; j++) {
+            String value = cells[j];
+            ReadCellData tempCellData = (ReadCellData) cellData.clone();
+            if (StringUtils.isEmpty(value) || "null".equals(value)) {
+                tempCellData.setType(CellDataTypeEnum.EMPTY);
+            } else {
+                tempCellData.setType(CellDataTypeEnum.STRING);
+            }
+            tempCellData.setStringValue(value);
+            // 放入cellMap中
+            readFileHolder.getCellMap().put(j, tempCellData);
         }
-        ClassUtils.declaredFields(clazz, sortedAllFieldMap);
+        analysisContext.readRowHolder(new ReadRowHolder(rowIndex, readFileHolder.getCellMap()));
+        analysisContext.readRowHolder().setCurrentRowAnalysisResult(readFileHolder.getCellMap());
+        analysisContext.analysisEventProcessor().endLine(analysisContext);
     }
 }

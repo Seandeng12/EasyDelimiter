@@ -1,10 +1,10 @@
 package net.seandeng.delimiter.read.metadata;
 
+import net.seandeng.delimiter.metadata.BasicParameter;
+import net.seandeng.delimiter.read.listener.ReadListener;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import net.seandeng.delimiter.metadata.BasicParameter;
-import net.seandeng.delimiter.read.listener.ReadListener;
 
 import java.util.ArrayList;
 import java.util.List;

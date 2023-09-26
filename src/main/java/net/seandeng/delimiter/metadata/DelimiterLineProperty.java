@@ -1,11 +1,11 @@
 package net.seandeng.delimiter.metadata;
 
-import com.alibaba.excel.util.FieldUtils;
-import com.alibaba.excel.util.MapUtils;
+import net.seandeng.delimiter.util.ClassUtils;
+import net.seandeng.delimiter.util.FieldUtils;
+import net.seandeng.delimiter.util.MapUtils;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import net.seandeng.delimiter.util.ClassUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,12 +1,12 @@
 package net.seandeng.delimiter.read.metadata.holder;
 
+import net.seandeng.delimiter.enums.HolderEnum;
+import net.seandeng.delimiter.metadata.data.ReadCellData;
+import net.seandeng.delimiter.read.metadata.ReadFile;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.seandeng.delimiter.enums.HolderEnum;
-import net.seandeng.delimiter.metadata.Cell;
-import net.seandeng.delimiter.read.metadata.ReadFile;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -32,7 +32,7 @@ public class ReadFileHolder extends AbstractReadHolder {
 
     private ReadWorkbookHolder parentReadWorkbookHolder;
 
-    private Map<Integer, Cell> cellMap;
+    private Map<Integer, ReadCellData> cellMap;
 
     private Integer rowIndex;
 

@@ -1,7 +1,6 @@
 package net.seandeng.delimiter.converters;
 
 import com.alibaba.excel.enums.CellDataTypeEnum;
-import net.seandeng.delimiter.metadata.DelimiterContentProperty;
 import net.seandeng.delimiter.metadata.data.ReadCellData;
 
 /**
@@ -32,11 +31,10 @@ public interface Converter<T> {
      * Convert objects to Java objects
      *
      * @param cellData            cell data.NotNull.
-     * @param contentProperty     Content property.Nullable.
      * @return Data to put into a Java object
      * @throws Exception Exception.
      */
-    default T convertToJavaData(ReadCellData<?> cellData, DelimiterContentProperty contentProperty) throws Exception {
+    default T convertToJavaData(ReadCellData cellData) {
         throw new UnsupportedOperationException("The current operation is not supported by the current converter.");
     }
 
@@ -47,7 +45,7 @@ public interface Converter<T> {
      * @return Data to put into a Java object
      * @throws Exception Exception.
      */
-    default T convertToJavaData(ReadConverterContext<?> context) throws Exception {
-        return convertToJavaData(context.getReadCellData(), context.getContentProperty());
+    default T convertToJavaData(ReadConverterContext<?> context) {
+        return convertToJavaData(context.getReadCellData());
     }
 }

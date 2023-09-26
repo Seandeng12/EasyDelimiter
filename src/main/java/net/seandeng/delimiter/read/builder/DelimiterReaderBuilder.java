@@ -3,8 +3,6 @@ package net.seandeng.delimiter.read.builder;
 import net.seandeng.delimiter.DelimiterReader;
 import net.seandeng.delimiter.read.metadata.ReadWorkbook;
 
-import java.io.InputStream;
-
 /**
  * Reader Builder
  *
@@ -22,8 +20,8 @@ public class DelimiterReaderBuilder extends AbstractDelimiterReaderParameterBuil
         return new DelimiterReader(readWorkbook);
     }
 
-    public DelimiterReaderBuilder file(InputStream inputStream) {
-        readWorkbook.setInputStream(inputStream);
+    public DelimiterReaderBuilder file(String fileName) {
+        readWorkbook.setFile(fileName);
         return this;
     }
 

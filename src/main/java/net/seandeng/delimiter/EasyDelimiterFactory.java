@@ -4,8 +4,6 @@ import net.seandeng.delimiter.read.builder.DelimiterReaderBuilder;
 import net.seandeng.delimiter.read.listener.ReadListener;
 import net.seandeng.delimiter.write.builder.DelimiterWriterBuilder;
 
-import java.io.InputStream;
-
 /**
  * Delimiter Factory
  *
@@ -21,9 +19,9 @@ public class EasyDelimiterFactory {
         return new DelimiterReaderBuilder();
     }
 
-    public static DelimiterReaderBuilder read(InputStream inputStream, Class<?> line, ReadListener<?> readListener) {
+    public static DelimiterReaderBuilder read(String fileName, Class<?> line, ReadListener<?> readListener) {
         DelimiterReaderBuilder delimiterReaderBuilder = new DelimiterReaderBuilder();
-        delimiterReaderBuilder.file(inputStream);
+        delimiterReaderBuilder.file(fileName);
         if (line != null) {
             delimiterReaderBuilder.line(line);
         }

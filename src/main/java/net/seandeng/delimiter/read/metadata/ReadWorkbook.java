@@ -4,7 +4,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.File;
 import java.io.InputStream;
 
 /**
@@ -17,20 +16,9 @@ import java.io.InputStream;
 public class ReadWorkbook extends ReadBasicParameter {
 
     /**
-     * Read InputStream
-     * <p>
-     * If 'inputStream' and 'file' all not empty, file first
-     */
-    private InputStream inputStream;
-    /**
      * Read file
      * <p>
      * If 'inputStream' and 'file' all not empty, file first
      */
-    private File file;
-
-    /**
-     * Default true
-     */
-    private Boolean autoCloseStream;
+    private String file;
 }

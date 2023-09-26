@@ -1,10 +1,8 @@
 package net.seandeng.delimiter.exception;
 
-import lombok.EqualsAndHashCode;
+import net.seandeng.delimiter.metadata.data.ReadCellData;
 import lombok.Getter;
 import lombok.Setter;
-import net.seandeng.delimiter.metadata.DelimiterContentProperty;
-import net.seandeng.delimiter.metadata.data.CellData;
 
 /**
  * DataConvertException
@@ -13,37 +11,38 @@ import net.seandeng.delimiter.metadata.data.CellData;
  */
 @Getter
 @Setter
-@EqualsAndHashCode
 public class DelimiterDataConvertException extends DelimiterRuntimeException {
 
+    /**
+     * rowIndex
+     */
     private Integer rowIndex;
     /**
      * NotNull.
      */
     private Integer columnIndex;
     /**
+     * NotNull
+     */
+    private String fieldName;
+    /**
      * NotNull.
      */
-    private CellData<?> cellData;
+    private ReadCellData cellData;
 
-    private DelimiterContentProperty delimiterContentProperty;
-
-    public DelimiterDataConvertException(Integer rowIndex, Integer columnIndex, CellData<?> cellData,
-                                         DelimiterContentProperty delimiterContentProperty, String message) {
-        super(message);
-        this.rowIndex = rowIndex;
-        this.columnIndex = columnIndex;
-        this.cellData = cellData;
-        this.delimiterContentProperty = delimiterContentProperty;
-    }
-
-    public DelimiterDataConvertException(Integer rowIndex, Integer columnIndex, CellData<?> cellData,
-                                         DelimiterContentProperty delimiterContentProperty, String message, Throwable cause) {
+    public DelimiterDataConvertException(Integer rowIndex, Integer columnIndex, ReadCellData cellData, String message, Throwable cause) {
         super(message, cause);
         this.rowIndex = rowIndex;
         this.columnIndex = columnIndex;
         this.cellData = cellData;
-        this.delimiterContentProperty = delimiterContentProperty;
+    }
+
+    public DelimiterDataConvertException(Integer rowIndex, Integer columnIndex, ReadCellData cellData, String fieldName, String message, Throwable cause) {
+        super(message, cause);
+        this.rowIndex = rowIndex;
+        this.columnIndex = columnIndex;
+        this.cellData = cellData;
+        this.fieldName = fieldName;
     }
 
     /**

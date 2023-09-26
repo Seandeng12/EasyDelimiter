@@ -5,8 +5,6 @@ import net.seandeng.delimiter.exception.DelimiterAnalysisException;
 import net.seandeng.delimiter.exception.DelimiterAnalysisStopException;
 import net.seandeng.delimiter.read.listener.ReadListener;
 import net.seandeng.delimiter.read.metadata.holder.ReadRowHolder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Impl of Processor
@@ -16,15 +14,12 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultAnalysisEventProcessor implements AnalysisEventProcessor {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultAnalysisEventProcessor.class);
-
     @Override
     public void endLine(AnalysisContext analysisContext) {
         dealData(analysisContext);
     }
 
     private void dealData(AnalysisContext analysisContext) {
-        LOGGER.info("DefaultAnalysisEventProcessor process data");
         ReadRowHolder readRowHolder = analysisContext.readRowHolder();
         // Now is data
         for (ReadListener readListener : analysisContext.currentReadHolder().readListenerList()) {

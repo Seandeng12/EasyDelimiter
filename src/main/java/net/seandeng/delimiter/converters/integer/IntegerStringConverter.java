@@ -2,9 +2,8 @@ package net.seandeng.delimiter.converters.integer;
 
 import com.alibaba.excel.enums.CellDataTypeEnum;
 import net.seandeng.delimiter.converters.Converter;
-import net.seandeng.delimiter.metadata.DelimiterContentProperty;
 import net.seandeng.delimiter.metadata.data.ReadCellData;
-import net.seandeng.delimiter.util.NumberUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * integer and string convert
@@ -24,7 +23,10 @@ public class IntegerStringConverter implements Converter<Integer> {
     }
 
     @Override
-    public Integer convertToJavaData(ReadCellData<?> cellData, DelimiterContentProperty contentProperty) throws Exception {
-        return NumberUtils.parseInteger(cellData.getStringValue(), contentProperty);
+    public Integer convertToJavaData(ReadCellData cellData) {
+        if (StringUtils.isNotEmpty(cellData.getStringValue())) {
+            return Integer.parseInt(cellData.getStringValue());
+        }
+        return null;
     }
 }
